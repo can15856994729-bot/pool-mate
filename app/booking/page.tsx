@@ -3,11 +3,13 @@
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { Clock, MapPin, ChevronDown } from "lucide-react";
+import Link from "next/link";
+import { Clock, MapPin, LogIn } from "lucide-react";
 import { MOCK_COMPANIONS, MOCK_VENUES } from "@/lib/mock-data";
 import PageHeader from "@/components/layout/PageHeader";
 import type { ServiceType } from "@/types";
 import { formatPrice } from "@/lib/utils";
+import { useAuthStore } from "@/store/authStore";
 
 const SERVICE_OPTIONS: ServiceType[] = ["实战陪练", "陪练", "教学"];
 const DURATION_OPTIONS = [1, 1.5, 2, 3];
@@ -17,6 +19,7 @@ function BookingContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const companionId = searchParams.get("companionId") ?? "c1";
+  const { isLoggedIn } = useAuthStore();
 
   const companion = MOCK_COMPANIONS.find((c) => c.id === companionId) ?? MOCK_COMPANIONS[0];
 
@@ -37,6 +40,43 @@ function BookingContent() {
       router.push(`/booking/success?id=${orderId}&total=${total}&companion=${companion.name}`);
     }, 800);
   };
+
+  // 未登录拦截
+  if (!isLoggedIn) {
+    return (
+      <div style={{ background: "#0d0d0d", minHeight: "100vh" }}>
+        <PageHeader title="预约球伴" />
+        <div className="px-5 pt-16 flex flex-col items-center text-center">
+          <div
+            className="w-20 h-20 rounded-full flex items-center justify-center mb-5"
+            style={{ background: "rgba(26,107,60,0.1)", border: "2px dashed rgba(26,107,60,0.3)" }}
+          >
+            <LogIn size={32} color="#1a6b3c" strokeWidth={1.5} />
+          </div>
+          <h2 className="font-black text-[20px] mb-2" style={{ color: "#f0f0f0" }}>
+            请先登录
+          </h2>
+          <p className="text-[13px] mb-8" style={{ color: "#555" }}>
+            登录后即可预约球伴，管理订单
+          </p>
+          <Link
+            href={`/login?redirect=/booking?companionId=${companionId}`}
+            className="w-full py-4 rounded-2xl font-black text-[15px] text-center block mb-3"
+            style={{ background: "#1a6b3c", color: "#fff" }}
+          >
+            立即登录
+          </Link>
+          <Link
+            href="/register"
+            className="w-full py-3.5 rounded-2xl font-bold text-[14px] text-center block"
+            style={{ border: "1px solid rgba(26,107,60,0.35)", color: "#22874d" }}
+          >
+            还没账号？免费注册
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>

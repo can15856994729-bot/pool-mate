@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Users, Swords, Store, User } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useAuthStore } from "@/store/authStore";
 
 const navItems = [
   { href: "/",           label: "首页", icon: Home  },
@@ -15,6 +15,7 @@ const navItems = [
 
 export default function BottomNav() {
   const pathname = usePathname();
+  const isLoggedIn = useAuthStore((s) => s.isLoggedIn);
 
   return (
     <nav
@@ -29,6 +30,7 @@ export default function BottomNav() {
         {navItems.map(({ href, label, icon: Icon }) => {
           const isActive =
             href === "/" ? pathname === "/" : pathname.startsWith(href);
+          const isProfile = href === "/profile";
 
           return (
             <Link
@@ -41,16 +43,21 @@ export default function BottomNav() {
               {isActive && (
                 <span
                   className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-[2px] rounded-full"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #1a6b3c 0%, #c9a84c 100%)",
-                  }}
+                  style={{ background: "linear-gradient(90deg, #1a6b3c 0%, #c9a84c 100%)" }}
                 />
               )}
-              <Icon
-                size={21}
-                strokeWidth={isActive ? 2.3 : 1.7}
-              />
+
+              {/* 图标 + 未登录红点 */}
+              <div className="relative">
+                <Icon size={21} strokeWidth={isActive ? 2.3 : 1.7} />
+                {isProfile && !isLoggedIn && (
+                  <span
+                    className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full"
+                    style={{ background: "#f87171", border: "1.5px solid #0a0a0a" }}
+                  />
+                )}
+              </div>
+
               <span
                 className="text-[10px] font-semibold"
                 style={{ color: isActive ? "#1a6b3c" : "#444" }}
