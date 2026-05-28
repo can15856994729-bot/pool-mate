@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Search, MapPin, Users, Swords, Store, ChevronRight, Zap, ShieldCheck, AlertTriangle, Lock, Navigation2 } from "lucide-react";
+import { Search, MapPin, Users, Swords, Store, ChevronRight, Zap, ShieldCheck, AlertTriangle, Lock, Navigation2, Download } from "lucide-react";
 import { MOCK_COMPANIONS, MOCK_GAMES, MOCK_VENUES } from "@/lib/mock-data";
 import CompanionCard from "@/components/companion/CompanionCard";
 import GameCard from "@/components/game/GameCard";
@@ -116,6 +116,26 @@ export default function HomePage() {
             📅 发布球局
           </Link>
         </div>
+
+        {/* 下载横幅 */}
+        <Link href="/download">
+          <div
+            className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl mb-3 active:opacity-80"
+            style={{
+              background: "rgba(26,107,60,0.12)",
+              border: "1px solid rgba(26,107,60,0.25)",
+            }}
+          >
+            <Download size={13} color="#22874d" />
+            <span className="text-[12px] font-semibold flex-1" style={{ color: "#22874d" }}>
+              📲 下载 App，随时随地约球
+            </span>
+            <span className="text-[11px] font-black px-2 py-0.5 rounded-full" style={{ background: "#1a6b3c", color: "#fff" }}>
+              免费
+            </span>
+            <ChevronRight size={12} color="#22874d" />
+          </div>
+        </Link>
 
         {/* 搜索框 */}
         <Link href="/companions">

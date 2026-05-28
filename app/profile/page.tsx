@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   Calendar, Package, Wallet, Star, ShieldCheck,
-  UserPlus, HeadphonesIcon, ScrollText, ChevronRight, LogIn
+  UserPlus, HeadphonesIcon, ScrollText, ChevronRight, LogIn, Download
 } from "lucide-react";
 import PageHeader from "@/components/layout/PageHeader";
 
@@ -27,9 +27,10 @@ const menuItems = [
 ];
 
 const bottomItems = [
-  { icon: UserPlus, label: "成为陪练",     href: "/join", highlight: true },
-  { icon: HeadphonesIcon, label: "客服中心", href: "#" },
-  { icon: ScrollText, label: "安全规则", href: "#" },
+  { icon: UserPlus,       label: "成为陪练",  href: "/join",     highlight: true },
+  { icon: Download,       label: "下载 App",  href: "/download", highlight: false },
+  { icon: HeadphonesIcon, label: "客服中心",  href: "#" },
+  { icon: ScrollText,     label: "安全规则",  href: "#" },
 ];
 
 export default function ProfilePage() {
