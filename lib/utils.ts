@@ -33,9 +33,11 @@ export function formatGameTime(dateStr: string): string {
     minute: "2-digit",
   });
 
-  if (isToday) return `今天 ${time}`;
-  if (isTomorrow) return `明天 ${time}`;
-  return date.toLocaleDateString("zh-CN", { month: "short", day: "numeric" }) + ` ${time}`;
+  const weekdays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+
+  if (isToday) return `今晚 ${time}`;
+  if (isTomorrow) return `明晚 ${time}`;
+  return `${weekdays[date.getDay()]} ${time}`;
 }
 
 export function getSlotsText(filled: number, total: number): string {

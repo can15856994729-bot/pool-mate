@@ -9,7 +9,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import type { ServiceType } from "@/types";
 import { formatPrice } from "@/lib/utils";
 
-const SERVICE_OPTIONS: ServiceType[] = ["陪打", "陪练", "教学"];
+const SERVICE_OPTIONS: ServiceType[] = ["实战陪练", "陪练", "教学"];
 const DURATION_OPTIONS = [1, 1.5, 2, 3];
 const TIME_SLOTS = ["14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"];
 

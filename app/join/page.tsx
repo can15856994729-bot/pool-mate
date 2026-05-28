@@ -9,7 +9,7 @@ import type { ServiceType } from "@/types";
 
 const STEPS = ["基本信息", "服务设置", "资质认证", "提交审核"];
 
-const SERVICE_OPTIONS: ServiceType[] = ["陪打", "陪练", "教学", "组局"];
+const SERVICE_OPTIONS: ServiceType[] = ["实战陪练", "陪练", "教学", "组局"];
 const LEVEL_OPTIONS = ["新手", "初级", "中级", "高级", "大师"];
 const SPECIALTY_OPTIONS = [
   "中式八球", "斯诺克", "美式九球",
@@ -27,7 +27,7 @@ export default function JoinPage() {
   const [bio, setBio] = useState("");
 
   // 服务设置
-  const [services, setServices] = useState<ServiceType[]>(["陪打"]);
+  const [services, setServices] = useState<ServiceType[]>(["实战陪练"]);
   const [level, setLevel] = useState("中级");
   const [price, setPrice] = useState("80");
   const [specialties, setSpecialties] = useState<string[]>([]);

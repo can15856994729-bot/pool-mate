@@ -212,6 +212,89 @@ export default function HomePage() {
       </div>
 
       {/* ═══════════════════════════════════════
+          如何使用
+      ═══════════════════════════════════════ */}
+      <div className="px-4 mb-5">
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-[15px] font-black" style={{ color: "#f0f0f0" }}>
+            <span style={{ color: "#c9a84c", marginRight: 5 }}>▌</span>
+            如何使用球伴
+          </span>
+        </div>
+        <div
+          className="rounded-2xl p-4"
+          style={{ background: "#131313", border: "1px solid #1e1e1e" }}
+        >
+          {[
+            {
+              step: "01",
+              icon: "🔍",
+              title: "选择球伴或球局",
+              desc: "浏览附近已认证陪练，或加入同城约球组局",
+              color: "#1a6b3c",
+            },
+            {
+              step: "02",
+              icon: "📅",
+              title: "在线预约确认",
+              desc: "选择服务类型、时长、球房，一键提交预约",
+              color: "#c9a84c",
+            },
+            {
+              step: "03",
+              icon: "🏠",
+              title: "到公开球房见面",
+              desc: "所有服务须在平台认证球房进行，安全有保障",
+              color: "#3b82f6",
+            },
+            {
+              step: "04",
+              icon: "⭐",
+              title: "完成评价",
+              desc: "服务结束后双方互评，维护平台安全生态",
+              color: "#f59e0b",
+            },
+          ].map((item, i, arr) => (
+            <div key={item.step} className="flex gap-3">
+              <div className="flex flex-col items-center">
+                <div
+                  className="w-9 h-9 rounded-xl flex items-center justify-center text-base flex-shrink-0"
+                  style={{
+                    background: `${item.color}18`,
+                    border: `1px solid ${item.color}33`,
+                  }}
+                >
+                  {item.icon}
+                </div>
+                {i < arr.length - 1 && (
+                  <div
+                    className="w-px flex-1 my-1"
+                    style={{ background: "#2a2a2a", minHeight: 16 }}
+                  />
+                )}
+              </div>
+              <div className="pb-4 flex-1">
+                <div className="flex items-center gap-2 mb-0.5">
+                  <span
+                    className="text-[10px] font-black tracking-widest"
+                    style={{ color: item.color }}
+                  >
+                    STEP {item.step}
+                  </span>
+                </div>
+                <p className="font-bold text-[13px] mb-0.5" style={{ color: "#f0f0f0" }}>
+                  {item.title}
+                </p>
+                <p className="text-[11px] leading-[1.6]" style={{ color: "#555" }}>
+                  {item.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════
           新人优惠
       ═══════════════════════════════════════ */}
       <div

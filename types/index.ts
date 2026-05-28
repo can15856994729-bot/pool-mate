@@ -21,7 +21,7 @@ export interface Companion {
   specialties: string[]; // 擅长项目
 }
 
-export type ServiceType = "陪打" | "陪练" | "教学" | "组局";
+export type ServiceType = "实战陪练" | "陪练" | "教学" | "组局";
 
 // ─── 评价 ────────────────────────────────────────────────────
 export interface Review {

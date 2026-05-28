@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -12,7 +12,7 @@ import PageHeader from "@/components/layout/PageHeader";
 const MOCK_USER = {
   id: "u1",
   name: "台球爱好者",
-  avatar: "https://i.pravatar.cc/300?img=23",
+  avatar: "https://picsum.photos/seed/avatar23/300/300",
   phone: "138****8888",
   isCompanion: false,
   wallet: 120,

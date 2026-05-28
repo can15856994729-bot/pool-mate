@@ -10,7 +10,7 @@ import type { ServiceType } from "@/types";
 
 const SERVICE_FILTERS: { label: string; value: ServiceType | "全部" }[] = [
   { label: "全部", value: "全部" },
-  { label: "陪打", value: "陪打" },
+  { label: "实战陪练", value: "实战陪练" },
   { label: "陪练", value: "陪练" },
   { label: "教学", value: "教学" },
   { label: "组局", value: "组局" },

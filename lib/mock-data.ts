@@ -1,18 +1,42 @@
-import type { Companion, Game, Venue, Booking } from "@/types";
+﻿import type { Companion, Game, Venue, Booking } from "@/types";
+
+// ─── 时间工具 ─────────────────────────────────────────────────
+/** 今天指定时刻（若已过则改为明天） */
+function todayAt(h: number, m = 0): string {
+  const d = new Date();
+  d.setHours(h, m, 0, 0);
+  if (d.getTime() < Date.now()) d.setDate(d.getDate() + 1);
+  return d.toISOString();
+}
+/** 明天指定时刻 */
+function tomorrowAt(h: number, m = 0): string {
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+  d.setHours(h, m, 0, 0);
+  return d.toISOString();
+}
+/** 下一个指定星期几（0=周日…6=周六）的指定时刻 */
+function nextWeekdayAt(weekday: number, h: number, m = 0): string {
+  const d = new Date();
+  const diff = (weekday - d.getDay() + 7) % 7 || 7;
+  d.setDate(d.getDate() + diff);
+  d.setHours(h, m, 0, 0);
+  return d.toISOString();
+}
 
 // ─── 球伴/陪练 数据 ───────────────────────────────────────────
 export const MOCK_COMPANIONS: Companion[] = [
   {
     id: "c1",
     name: "林晓雯",
-    avatar: "https://i.pravatar.cc/300?img=47",
+    avatar: "https://picsum.photos/seed/avatar47/300/300",
     level: "高级",
     distance: "0.8km",
     rating: 4.9,
     reviewCount: 128,
     pricePerHour: 120,
     tags: ["中式八球", "教学", "耐心"],
-    services: ["陪打", "陪练", "教学"],
+    services: ["实战陪练", "陪练", "教学"],
     bio: "从事台球教学 6 年，擅长从零带起新手。讲解细致有耐心，走位、发球、防守全面教学，已带出多名进阶球友。",
     verified: true,
     online: true,
@@ -30,7 +54,7 @@ export const MOCK_COMPANIONS: Companion[] = [
         id: "r1",
         userId: "u2",
         userName: "小明",
-        userAvatar: "https://i.pravatar.cc/80?img=53",
+        userAvatar: "https://picsum.photos/seed/avatar53/80/80",
         rating: 5,
         comment: "晓雯讲解非常详细，一节课就让我理解了走位！强烈推荐。",
         createdAt: "2026-05-20T14:00:00Z",
@@ -39,7 +63,7 @@ export const MOCK_COMPANIONS: Companion[] = [
         id: "r2",
         userId: "u3",
         userName: "阿远",
-        userAvatar: "https://i.pravatar.cc/80?img=57",
+        userAvatar: "https://picsum.photos/seed/avatar57/80/80",
         rating: 5,
         comment: "配合默契，打球很舒服，下次还来！",
         createdAt: "2026-05-18T19:00:00Z",
@@ -49,14 +73,14 @@ export const MOCK_COMPANIONS: Companion[] = [
   {
     id: "c2",
     name: "张雅婷",
-    avatar: "https://i.pravatar.cc/300?img=39",
+    avatar: "https://picsum.photos/seed/avatar39/300/300",
     level: "中级",
     distance: "1.2km",
     rating: 4.7,
     reviewCount: 89,
     pricePerHour: 90,
-    tags: ["斯诺克", "陪打", "气氛好"],
-    services: ["陪打", "陪练"],
+    tags: ["斯诺克", "实战陪练", "气氛好"],
+    services: ["实战陪练", "陪练"],
     bio: "斯诺克爱好者，打了 5 年。氛围轻松不压力，喜欢和不同的朋友一起享受台球的乐趣。",
     verified: true,
     online: true,
@@ -73,7 +97,7 @@ export const MOCK_COMPANIONS: Companion[] = [
         id: "r3",
         userId: "u4",
         userName: "晓晓",
-        userAvatar: "https://i.pravatar.cc/80?img=20",
+        userAvatar: "https://picsum.photos/seed/avatar20/80/80",
         rating: 5,
         comment: "雅婷姐很 nice，打球氛围超好！",
         createdAt: "2026-05-22T20:00:00Z",
@@ -83,14 +107,14 @@ export const MOCK_COMPANIONS: Companion[] = [
   {
     id: "c3",
     name: "苏思涵",
-    avatar: "https://i.pravatar.cc/300?img=45",
+    avatar: "https://picsum.photos/seed/avatar45/300/300",
     level: "大师",
     distance: "2.1km",
     rating: 5.0,
     reviewCount: 312,
     pricePerHour: 200,
     tags: ["中式八球", "斯诺克", "职业级"],
-    services: ["陪打", "陪练", "教学"],
+    services: ["实战陪练", "陪练", "教学"],
     bio: "省级台球联赛女子组前三，有职业比赛经历。专注提升学员竞技水平，适合有一定基础想进阶的球友。",
     verified: true,
     online: false,
@@ -108,7 +132,7 @@ export const MOCK_COMPANIONS: Companion[] = [
         id: "r4",
         userId: "u5",
         userName: "老李",
-        userAvatar: "https://i.pravatar.cc/80?img=60",
+        userAvatar: "https://picsum.photos/seed/avatar60/80/80",
         rating: 5,
         comment: "思涵是真正的高手，跟她练了三节课感觉水平提升了一大截！",
         createdAt: "2026-05-15T16:00:00Z",
@@ -118,14 +142,14 @@ export const MOCK_COMPANIONS: Companion[] = [
   {
     id: "c4",
     name: "陈美琪",
-    avatar: "https://i.pravatar.cc/300?img=44",
+    avatar: "https://picsum.photos/seed/avatar44/300/300",
     level: "中级",
     distance: "1.8km",
     rating: 4.6,
     reviewCount: 67,
     pricePerHour: 80,
     tags: ["美式九球", "组局", "活跃"],
-    services: ["陪打", "组局"],
+    services: ["实战陪练", "组局"],
     bio: "美式九球爱好者，喜欢组局玩赛制。每周末都在球厅，欢迎各路球友一起来切磋！",
     verified: true,
     online: true,
@@ -139,14 +163,14 @@ export const MOCK_COMPANIONS: Companion[] = [
   {
     id: "c5",
     name: "刘思雨",
-    avatar: "https://i.pravatar.cc/300?img=15",
+    avatar: "https://picsum.photos/seed/avatar15/300/300",
     level: "初级",
     distance: "0.5km",
     rating: 4.5,
     reviewCount: 23,
     pricePerHour: 60,
     tags: ["中式八球", "新手友好", "价格亲民"],
-    services: ["陪打"],
+    services: ["实战陪练"],
     bio: "台球新秀，打球一年多，适合同等水平的朋友一起切磋。轻松愉快，价格实惠。",
     verified: false,
     online: true,
@@ -165,12 +189,12 @@ export const MOCK_GAMES: Game[] = [
     id: "g1",
     hostId: "c1",
     hostName: "林晓雯",
-    hostAvatar: "https://i.pravatar.cc/300?img=47",
+    hostAvatar: "https://picsum.photos/seed/avatar47/300/300",
     hostRating: 4.9,
     venueId: "v1",
     venueName: "红星台球会所",
     venueAddress: "天河区体育西路88号",
-    gameTime: new Date(Date.now() + 3 * 60 * 60 * 1000).toISOString(),
+    gameTime: todayAt(20, 0),        // 今晚 20:00
     totalSlots: 4,
     filledSlots: 3,
     gameType: "中式八球",
@@ -184,12 +208,12 @@ export const MOCK_GAMES: Game[] = [
     id: "g2",
     hostId: "c2",
     hostName: "张雅婷",
-    hostAvatar: "https://i.pravatar.cc/300?img=39",
+    hostAvatar: "https://picsum.photos/seed/avatar39/300/300",
     hostRating: 4.7,
     venueId: "v2",
     venueName: "皇冠台球城",
     venueAddress: "越秀区中山路156号",
-    gameTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+    gameTime: tomorrowAt(19, 30),
     totalSlots: 2,
     filledSlots: 1,
     gameType: "斯诺克",
@@ -202,12 +226,12 @@ export const MOCK_GAMES: Game[] = [
     id: "g3",
     hostId: "c4",
     hostName: "陈美琪",
-    hostAvatar: "https://i.pravatar.cc/300?img=44",
+    hostAvatar: "https://picsum.photos/seed/avatar44/300/300",
     hostRating: 4.6,
     venueId: "v3",
     venueName: "绿台俱乐部",
     venueAddress: "海珠区工业大道66号",
-    gameTime: new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString(),
+    gameTime: nextWeekdayAt(6, 15, 0),
     totalSlots: 8,
     filledSlots: 5,
     gameType: "美式九球",
@@ -221,12 +245,12 @@ export const MOCK_GAMES: Game[] = [
     id: "g4",
     hostId: "c3",
     hostName: "苏思涵",
-    hostAvatar: "https://i.pravatar.cc/300?img=45",
+    hostAvatar: "https://picsum.photos/seed/avatar45/300/300",
     hostRating: 5.0,
     venueId: "v2",
     venueName: "皇冠台球城",
     venueAddress: "越秀区中山路156号",
-    gameTime: new Date(Date.now() + 5 * 60 * 60 * 1000).toISOString(),
+    gameTime: todayAt(21, 0),
     totalSlots: 4,
     filledSlots: 4,
     gameType: "中式八球",
@@ -315,7 +339,7 @@ export const MOCK_BOOKINGS: Booking[] = [
     id: "b1",
     companionId: "c1",
     companionName: "林晓雯",
-    companionAvatar: "https://i.pravatar.cc/300?img=47",
+    companionAvatar: "https://picsum.photos/seed/avatar47/300/300",
     service: "教学",
     duration: 2,
     venueId: "v1",
@@ -330,8 +354,8 @@ export const MOCK_BOOKINGS: Booking[] = [
     id: "b2",
     companionId: "c2",
     companionName: "张雅婷",
-    companionAvatar: "https://i.pravatar.cc/300?img=39",
-    service: "陪打",
+    companionAvatar: "https://picsum.photos/seed/avatar39/300/300",
+    service: "实战陪练",
     duration: 1,
     venueId: "v3",
     venueName: "绿台俱乐部",
@@ -344,7 +368,7 @@ export const MOCK_BOOKINGS: Booking[] = [
     id: "b3",
     companionId: "c3",
     companionName: "苏思涵",
-    companionAvatar: "https://i.pravatar.cc/300?img=45",
+    companionAvatar: "https://picsum.photos/seed/avatar45/300/300",
     service: "陪练",
     duration: 3,
     venueId: "v2",
